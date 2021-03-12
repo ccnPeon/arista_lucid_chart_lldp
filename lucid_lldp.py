@@ -12,7 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 username = input("Please enter your username: ")
 password = getpass("Please enter your password: ")
 
-with open('device_list.yaml') as device_file:
+with open('device_list.yml') as device_file:
     device_list = yaml.safe_load(device_file.read())
 
 write_data = [{'Id': '1', 'type': 'page', 'Name': 'Page', 'Shape Library': '',
