@@ -24,7 +24,9 @@ csv_columns = ['Id', 'Name', 'Shape Library', 'Page ID', 'Contained By', 'Group'
 csv_file = "lldp_lucid.csv"
 #########################################
 
-def send_arista_commands_api(url):
+def send_arista_commands_api(username,password,device):
+
+    url = 'https://{0}:{1}@{2}/command-api'.format(username,password,device)
 
     commands = ['enable', 'show hostname', 'show lldp neighbors']
 
@@ -61,14 +63,13 @@ def main():
     print('Gathering Device Data...')
     device_count = 2
     for device in device_list:
-        url = 'https://{0}:{1}@{2}/command-api'.format(username,password,device)
 
         prep_device = {'Id': str(device_count),'type': 'device', 'Name': 'Text', 'Shape Library': 'Standard',
         'Page ID': '1', 'Contained By': '', 'Group': '', 'Line Source': '',
         'Line Destination': '', 'Source Arrow': '', 'Destination Arrow': '',
         'Text Area 1': ''}
 
-        hostname, lldp_neighbors = send_arista_commands_api(url)
+        hostname, lldp_neighbors = send_arista_commands_api(username,password,device)
 
         prep_device['Text Area 1'] = hostname['fqdn']
         prep_device['lldp_neighbors'] = []
